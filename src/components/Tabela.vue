@@ -26,7 +26,7 @@
 
 <script>
 import { StoreItens } from "@/stores/itens";
-import { watch, onMounted } from "vue";
+
 
 export default {
 	name: "Table",
