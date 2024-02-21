@@ -13,7 +13,21 @@ export const StoreItens = defineStore({
 		// Data
 		data: [],
 	}),
-
+	getters: {
+    // Getter que filtra itens por id ou title
+    filtrarItens: (state) => (filtro) => {
+      if (!filtro.valor || filtro.valor === '') {
+        return state.data;
+      }
+      return state.data.filter((item) => {
+        if (filtro.tipo === 'id') {
+          return item.id.toString().includes(filtro.valor);
+        } else if (filtro.tipo === 'title') {
+          return item.title.toLowerCase().includes(filtro.valor.toLowerCase());
+        }
+      });
+    },
+  },
 	actions: {
 		async load() {
 			try {
