@@ -1,0 +1,13 @@
+// pinia
+
+- Use getters para obter valores derivados ou computados com base no estado atual, sem modificar o estado.
+- Use actions para modificar o estado, especialmente se precisar realizar operações assíncronas (como chamadas de API) antes de atualizar o estado.
+
+Considerando uma função assíncrona filtrarDados que utiliza um getter filtrarItens:
+async filtrarDados() {
+  // Assume que você tem uma operação assíncrona antes, como carregar dados.
+  await this.store.load();
+  // Agora, você acessa o getter para obter dados filtrados.
+  this.data = this.store.filtrarItens({ tipo: 'id', valor: this.filtroId });
+}
+Neste cenário, o uso do getter é perfeitamente válido. Você está aguardando a conclusão da operação assíncrona load() antes de acessar o getter filtrarItens. O getter em si é síncrono e retorna imediatamente os dados filtrados baseados no estado atual da store.
