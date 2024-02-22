@@ -36,17 +36,25 @@ export default {
 			data: [],
 			filtroId: '',
 			filtroTitle: '',
+			debounceTimer: null,
 		};
 	},
 
 	watch: {
-		filtroId(newVal) {
-			this.filtrarDados();
+		filtroId() {
+			if (this.debounceTimer) clearTimeout(this.debounceTimer);
+			this.debounceTimer = setTimeout(() => {
+				this.filtrarDados();
+			}, 2000); // Espera 300ms antes de invocar filtrarDados
 		},
-		filtroTitle(newVal) {
-			this.filtrarDados();
+		filtroTitle() {
+			if (this.debounceTimer) clearTimeout(this.debounceTimer);
+			this.debounceTimer = setTimeout(() => {
+				this.filtrarDados();
+			}, 2000); // Espera 300ms antes de invocar filtrarDados
 		},
 	},
+
 
 	methods: {
 		async filtrarDados() {
