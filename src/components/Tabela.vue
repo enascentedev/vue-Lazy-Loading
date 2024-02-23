@@ -51,6 +51,9 @@ export default {
 
         // Timer para a função de debounce
         debounceTimer: null,
+				
+				//serve para armazenar temporariamente o próximo conjunto de dados 
+				additionalData:""
 		};
 	},
 
@@ -99,9 +102,9 @@ export default {
 		
 		//função carrega mais dados para serem exibidos na tabela
 		loadMoreData() {
-			const additionalData = this.allData.slice(this.nextIndex, this.nextIndex + this.itemsPerScroll);
+			this.additionalData = this.allData.slice(this.nextIndex, this.nextIndex + this.itemsPerScroll);
 			this.nextIndex += this.itemsPerScroll;
-			this.visibleData = this.visibleData.concat(additionalData);
+			this.visibleData = this.visibleData.concat(this.additionalData);
 		},
 	},
 
