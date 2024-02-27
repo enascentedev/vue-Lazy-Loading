@@ -1,43 +1,57 @@
 <template>
-	<div class="flex w-full">
-		<div class="flex justify-center gap-5 p-5">
-			<input type="text" v-model="filtroId" name="id" placeholder="Pesquisar Id"
-				class="input input-bordered w-full max-w-xs" />
-			<input type="text" v-model="filtroTitle" name="title" placeholder="Pesquisar titulo"
-				class="input input-bordered w-full max-w-xs" />
-		</div>
-
-		<div class="overflow-x-auto h-[710px]" @scroll="handleScroll">
-			<table class="table table-pin-rows">
-				<thead>
-					<tr>
-						<th>Id</th>
-						<th>Itens</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr v-for="item in visibleData" :key="item.id">
-						<td>{{ item.id }}</td>
-						<td>{{ item.title }}</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+	<div class="join">
 		<div>
-			<Card />
+			<div>
+				<input class="input input-bordered join-item" placeholder="Search" />
+			</div>
+		</div>
+		<select class="select select-bordered join-item">
+			<option disabled selected>Filter</option>
+			<option>Sci-fi</option>
+			<option>Drama</option>
+			<option>Action</option>
+		</select>
+		<div class="indicator">
+			<span class="indicator-item badge badge-secondary">new</span>
+			<button class="btn join-item">Search</button>
 		</div>
 	</div>
+
+
+
+	<div class="overflow-x-auto h-[710px]" @scroll="handleScroll">
+		<table class="table table-pin-rows">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Itens</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="item in visibleData" :key="item.id">
+					<td>{{ item.id }}</td>
+					<td>{{ item.title }}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div class="join">
+		<button class="join-item btn">1</button>
+		<button class="join-item btn">2</button>
+		<button class="join-item btn btn-disabled">...</button>
+		<button class="join-item btn">99</button>
+		<button class="join-item btn">100</button>
+	</div>
+	
 </template>
 
 <script>
 import { StoreItens } from "@/stores/itens";
-import Card from "@/components/Card.vue";
 
 
 export default {
-	name: "Table",
-
-	components: { Card },
+	name: "TablePaginacao",
 
 	data() {
 		return {
@@ -63,7 +77,6 @@ export default {
 			//serve para armazenar temporariamente o próximo conjunto de dados 
 			additionalData: ""
 		};
-
 	},
 
 	watch: {
