@@ -1,30 +1,34 @@
 <template>
-	<div class="flex w-full">
-		<div class="flex justify-center gap-5 p-5">
-			<input type="text" v-model="filtroId" name="id" placeholder="Pesquisar Id"
-				class="input input-bordered w-full max-w-xs" />
-			<input type="text" v-model="filtroTitle" name="title" placeholder="Pesquisar titulo"
-				class="input input-bordered w-full max-w-xs" />
+	<div class="flex">
+		<div class="flex w-[49%]">
+			<div class="flex flex-col">
+				<div class="flex justify-center gap-5 p-5">
+					<input type="text" v-model="filtroId" name="id" placeholder="Pesquisar Id"
+						class="input input-bordered w-full max-w-xs" />
+					<input type="text" v-model="filtroTitle" name="title" placeholder="Pesquisar titulo"
+						class="input input-bordered w-full max-w-xs" />
+				</div>
+				<div>teste</div>
+			</div>
+			<div class="overflow-x-auto h-[650px]" @scroll="handleScroll">
+				<table class="table table-pin-rows">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Itens</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr v-for="item in visibleData" :key="item.id">
+							<td>{{ item.id }}</td>
+							<td>{{ item.title }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
-
-		<div class="overflow-x-auto h-[710px]" @scroll="handleScroll">
-			<table class="table table-pin-rows">
-				<thead>
-					<tr>
-						<th>Id</th>
-						<th>Itens</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr v-for="item in visibleData" :key="item.id">
-						<td>{{ item.id }}</td>
-						<td>{{ item.title }}</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<div>
-			<Card />
+		<div class="w-[49%]">
+			<Card :visibleData="visibleData" @like="handleLike" @deslike="handleDeslike" />
 		</div>
 	</div>
 </template>
@@ -51,7 +55,7 @@ export default {
 			nextIndex: 0,
 
 			// Quantos itens devem ser carregados por vez durante o scroll
-			itemsPerScroll: 15,
+			itemsPerScroll: 13,
 
 			// filtros existentes
 			filtroId: '',
@@ -115,6 +119,14 @@ export default {
 			this.nextIndex += this.itemsPerScroll;
 			this.visibleData = this.visibleData.concat(this.additionalData);
 		},
+		handleLike() {
+			// Lógica para lidar com o evento 'like'
+			console.log('Evento like recebido do componente filho!');
+		},
+		handleDeslike() {
+			// Lógica para lidar com o evento 'like'
+			console.log('Evento Deslike recebido do componente filho!');
+		}
 	},
 
 

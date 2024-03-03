@@ -17,8 +17,6 @@
 		</div>
 	</div>
 
-
-
 	<div class="overflow-x-auto h-[710px]" @scroll="handleScroll">
 		<table class="table table-pin-rows">
 			<thead>
