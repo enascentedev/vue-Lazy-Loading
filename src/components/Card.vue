@@ -5,37 +5,34 @@
 				<img :src="dataImage.message.length > index ? dataImage.message[index] : 'fallback-image-url'" alt="Dog image"
 					class="rounded-xl h-32" />
 			</figure>
-			<div class="h-24 p-2 flex flex-col justify-between">
+			<div class="h-24 p-1 flex flex-col justify-between">
 				<h2 class="text-center text-xs font-bold p-1">{{ item.id }}</h2>
 				<div class="flex justify-center items-end p-1">
-					<button @click="$emit('like')" class="min-h-8 h-8 btn btn-success m-2">bom</button>
-					<button @click="$emit('deslike')" class="min-h-8 h-8 btn btn-error m-2">ruim</button>
+					<button @click="$emit('like', item.id)" class="min-h-8 h-8 btn btn-success m-1"><i class="fa-regular fa-thumbs-up"></i>bom</button>
+					<button @click="$emit('dislike',item.id)" class="min-h-8 h-8 btn btn-error m-1"><i class="fa-regular fa-thumbs-down"></i>ruim</button>
 				</div>
 			</div>
 		</div>
 	</div>
 </template>
 
-
 <script>
-import { StoreItens } from "@/stores/itens";
+
 import { StoreImagens } from "@/stores/imagens";
 
 export default {
 	props: {
-		// Define 'visibleData' esperando receber um Array
+		
 		visibleData: {
 			type: Array,
-			required: true, // Só adicione isso se a prop for obrigatória
-			default: () => [] // Só forneça um valor padrão se for necessário e se não for obrigatório
+			required: true,
+			default: () => [] 
 		}
 	},
 
 	name: "Card",
 	data() {
 		return {
-			data: [],
-			store: [],
 			dataImage: [],
 			storeImagens: [],
 		};
@@ -43,15 +40,11 @@ export default {
 
 	methods: {
 
-
 	},
-	// quero excluir essa chamada 
+
 	async mounted() {
-		this.store = StoreItens();
-		this.data = await this.store.load();
 		this.storeImagens = StoreImagens();
 		this.dataImage = await this.storeImagens.loadImagem();
-		console.log(this.dataImage.message)
 	},
 };
 </script>

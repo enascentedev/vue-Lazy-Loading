@@ -1,14 +1,23 @@
 <template>
 	<div class="flex">
 		<div class="flex w-[49%]">
-			<div class="flex flex-col">
+			<div class="flex flex-col w-[59%]">
 				<div class="flex justify-center gap-5 p-5">
 					<input type="text" v-model="filtroId" name="id" placeholder="Pesquisar Id"
-						class="input input-bordered w-full max-w-xs" />
+						class="input input-bordered w-full max-w-xs text-xs" />
 					<input type="text" v-model="filtroTitle" name="title" placeholder="Pesquisar titulo"
-						class="input input-bordered w-full max-w-xs" />
+						class="input input-bordered w-full max-w-xs text-xs" />
 				</div>
-				<div>teste</div>
+				<div class="w-full flex justify-between flex-wrap gap-1 p-5">
+					<div v-for="(count, id) in counters" :key="`counter-${id}`" class="w-32 flex justify-between border-2 p-2 border-blue-500 rounded-md">
+						<i class="fa-regular fa-thumbs-up text-lg p-2"></i>
+						<div class="flex flex-col">
+							<h2>ID: {{ id }}</h2>
+							<p>Likes: {{ count.likes }}</p>
+							<p>Dislikes: {{ count.dislikes }}</p>
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="overflow-x-auto h-[650px]" @scroll="handleScroll">
 				<table class="table table-pin-rows">
@@ -28,7 +37,7 @@
 			</div>
 		</div>
 		<div class="w-[49%]">
-			<Card :visibleData="visibleData" @like="handleLike" @deslike="handleDeslike" />
+			<Card :visibleData="visibleData" @like="handleLike" @dislike="handleDislike" />
 		</div>
 	</div>
 </template>
@@ -45,6 +54,9 @@ export default {
 
 	data() {
 		return {
+			likesCount: 0,
+			dislikesCount: 0,
+			counters: {},
 			// Dados originais não filtrados (todos os dados da API)
 			allData: [],
 
@@ -119,14 +131,14 @@ export default {
 			this.nextIndex += this.itemsPerScroll;
 			this.visibleData = this.visibleData.concat(this.additionalData);
 		},
-		handleLike() {
-			// Lógica para lidar com o evento 'like'
-			console.log('Evento like recebido do componente filho!');
+		handleLike(itemId) {
+			if (!this.counters[itemId]) this.counters[itemId] = { likes: 0, dislikes: 0 };
+			this.counters[itemId].likes++;
 		},
-		handleDeslike() {
-			// Lógica para lidar com o evento 'like'
-			console.log('Evento Deslike recebido do componente filho!');
-		}
+		handleDislike(itemId) {
+			if (!this.counters[itemId]) this.counters[itemId] = { likes: 0, dislikes: 0 };
+			this.counters[itemId].dislikes++;
+		},
 	},
 
 
